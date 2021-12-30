@@ -651,7 +651,7 @@ def get_edit_pages(menu, session):
         if menu.model_class != item_class:
             menu.item = session.query(item_class).filter(item_class.id == menu.item.id).first()
             menu.model_class = item_class
-        columns = models.Character.__table__.c + item_class.__table__.c       
+        columns = list(models.Character.__table__.c) + list(item_class.__table__.c)
     else:
         columns = item_class.__table__.c
     
