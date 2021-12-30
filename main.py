@@ -2,10 +2,6 @@ import os
 import discord
 from discord.ext import commands
 
-from datetime import datetime
-import json
-
-from reactionmenu import ButtonsMenu, ComponentsButton
 from better_help import Help
 
 from cogs.data import Data
@@ -16,12 +12,9 @@ from cogs.time import Time
 
 import cogs.orm.database_connection as db
 
-from asyncio import TimeoutError
+from keep_alive import keep_alive
 
-#from dotenv import load_dotenv
-#load_dotenv()
-
-#token = os.getenv('DISCORD_TOKEN_VAMPYRE')
+token = os.getenv('DISCORD_TOKEN_VAMPYRE')
 
 db.load_db()
 
@@ -45,7 +38,6 @@ async def on_ready():
     print(bot.user.name)
     print(bot.user.id)
     print('------')
-    scheduled_tasks.start()
     
 @bot.event
 async def on_command_error(ctx, error):
@@ -57,4 +49,5 @@ bot.add_cog(Transfer(bot))
 bot.add_cog(Chance(bot))
 bot.add_cog(Time(bot))
 
+keep_alive()
 bot.run(token)
