@@ -126,7 +126,15 @@ class Time(commands.Cog, name = 'Tiempo'):
         if t >= time_data['next']:
             if time_data['running']:
                 await advance_date(self.bot)
+            time_data = load_time_data()
             time_data['next'] += time_data['lapse']
+            dump_time_data(time_data)
+        
+
+
+    @commands.Cog.listener()
+    async def on_ready(self):
+        self.check_time.start()
         
     @commands.command()
     async def time(self, ctx):
