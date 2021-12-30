@@ -2,6 +2,7 @@ import os
 import discord
 from discord.ext import commands
 
+from reactionmenu import ButtonsMenu
 from better_help import Help
 
 from cogs.data import Data
