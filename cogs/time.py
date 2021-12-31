@@ -39,11 +39,11 @@ def dt_delta_str(dt):
     
 async def advance_date(bot):    
     time_data = load_time_data()
-    day = time_data['day'] + 1
-    notifications_channel = bot.get_channel(time_data['notifications_channel'])
-    await apply_time_effects(day, notifications_channel)
-    time_data['day'] = day
+    time_data['day'] += 1
     dump_time_data(time_data)
+    await bot.data_backup(time_data['backup_channel'])
+    notifications_channel = bot.get_channel(time_data['notifications_channel'])
+    await apply_time_effects(time_data['day'], notifications_channel)
     
 def pause_updates():
     time_data = load_time_data()
@@ -124,11 +124,10 @@ class Time(commands.Cog, name = 'Tiempo'):
         t = datetime.now().timestamp()
         
         if t >= time_data['next']:
-            if time_data['running']:
-                await advance_date(self.bot)
-            time_data = load_time_data()
             time_data['next'] += time_data['lapse']
             dump_time_data(time_data)
+            if time_data['running']:
+                await advance_date(self.bot)
         
 
 

@@ -174,7 +174,7 @@ async def apply_time_effects(day, channel):
                         c_blood.value -= 1
             updated += 1
     except Exception as e:
-        session.rollback()
+        #session.rollback()
         await channel.send(str(e))
     else:
         session.commit()
