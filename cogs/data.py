@@ -249,10 +249,7 @@ async def add_trait_value(menu):
     menu.disable_all_buttons()
     await menu.refresh_menu_buttons()
     embed = discord.Embed(title=f"Nuevo rasgo", colour=discord.Colour.blue(),
-                          description=f"Introduzca el nombre del rasgo. Por ejemplo:\n\n\
-                          `Atletismo`\n\n\
-                          O escriba \"Ninguno\" para regresar:\n\n\
-                          `Ninguno`")
+                          description=f"Introduzca el nombre del rasgo. Por ejemplo:\n\n`Atletismo`\n\nO escriba \"Ninguno\" para regresar:\n\n`Ninguno`")
     bot_message = await menu._ctx.send(embed = embed)
 
     success = False
@@ -297,11 +294,9 @@ async def edit_trait_value(menu, trait_name):
     menu.disable_all_buttons()
     await menu.refresh_menu_buttons()
     embed = discord.Embed(title=f"{trait_name}", colour=discord.Colour.blue(),
-                          description=f"Introduzca un nuevo valor de {trait_name}, seguido \
-                          opcionalmente de especialidades o especificaciones. Por ejemplo:\n\n\
-                          `5 Saltar muros`\n\n\
-                          O escriba \"Ninguno\" para eliminar el rasgo del personaje:\n\n\
-                          `Ninguno`")
+                          description=f"Introduzca un nuevo valor de {trait_name}, seguido opcionalmente de especialidades o especificaciones. Por ejemplo:\n\
+						  \n`5 Saltar muros`\n\
+						  \nO escriba \"Ninguno\" para eliminar el rasgo del personaje:\n\n`Ninguno`")
     bot_message = await menu._ctx.send(embed = embed)
 
     success = False
@@ -518,8 +513,7 @@ async def cancel_edition(menu, edit_variables, data_pages, data_buttons, edit_pa
     if menu.edited:
         menu.show_page_director = False
         confirm_page = [discord.Embed(title="Cancelar", colour=discord.Colour.blue(),
-                                  description="¿Está seguro de que desea cancelar? \
-                                  Se perderán todos los cambios realizados.")]
+                                  description="¿Está seguro de que desea cancelar? Se perderán todos los cambios realizados.")]
         confirm_buttons = []
 
         cancel_followup_no = ComponentsButton.Followup()
@@ -574,9 +568,9 @@ async def edit_value(menu, edit_variables, edit_pages, edit_buttons):
     except:
         original_value = getattr(menu.item, field['name'], 'Ninguno')
         
-    desc = f"Introduzca un nuevo valor para {field['disp_name']} en {menu.item.short_str()}\n\
-    Tipo de propiedad: {models.type_names[field['type']]}\n\
-    Valor actual: {original_value}"
+    desc = f"Introduzca un nuevo valor para {field['disp_name']} en {menu.item.short_str()}\
+    \nTipo de propiedad: {models.type_names[field['type']]}\
+    \nValor actual: {original_value}"
     
     value_page = [discord.Embed(title=f"Modificando {field['disp_name']}", colour=discord.Colour.blue(),
                                   description=desc)]    
@@ -633,8 +627,7 @@ async def edit_value(menu, edit_variables, edit_pages, edit_buttons):
             success = True
             display_value = 'Ninguno' if value is None else (value if fk is None else target.name)
             confirm_page = [discord.Embed(title=f"Modificando {field['disp_name']}", colour=discord.Colour.blue(),
-                                      description=f"El nuevo valor de {field['disp_name']} \
-                                      en {menu.item.short_str()} es:\n\n{display_value}\n\n¿Aceptar?")]
+                                      description=f"El nuevo valor de {field['disp_name']} en {menu.item.short_str()} es:\n\n{display_value}\n\n¿Aceptar?")]
             
             apply_followup.set_caller_details(apply_value_edition, menu, field, value,
                                               edit_pages, edit_buttons, page_index)
@@ -663,27 +656,17 @@ def get_edit_pages(menu, session):
             foreign = session.query(fk.table).filter(fk.table.columns['id'] == getattr(menu.item, column.name)).first()
             foreign_name = foreign.name if foreign is not None else 'Ninguno'
             #foreign = session.query(fk.table).filter(fk.table.columns['id'] == 5).first()
-            content = f"**Propiedad**\n\
-            {column.comment}\n\
-            \n\
-            **Tipo de propiedad**\n\
-            {models.type_names[str]}\n\
-            \n\
-            **Valor**\n\
-            {foreign_name}"
+            content = f"**Propiedad**\n{column.comment}\n\
+            \n**Tipo de propiedad**\n{models.type_names[str]}\n\
+            \n**Valor**\n{foreign_name}"
             edit_pages.append(discord.Embed(title=f"{menu.item.short_str()}", colour=discord.Colour.blue(),
                               description=content))
             edit_variables.append({'name':column.name, 'disp_name':column.comment, 
                                    'type':str, 'fk':fk, 'first_value':getattr(menu.item, column.name, None)})
         else:
-            content = f"**Propiedad**\n\
-            {column.comment}\n\
-            \n\
-            **Tipo**\n\
-            {models.type_names[column.type.python_type]}\n\
-            \n\
-            **Valor**\n\
-            {getattr(menu.item, column.name, 'Ninguno')}"
+            content = f"**Propiedad**\n{column.comment}\n\
+            \n**Tipo**\n{models.type_names[column.type.python_type]}\n\
+            \n**Valor**\n{getattr(menu.item, column.name, 'Ninguno')}"
             edit_pages.append(discord.Embed(title=f"{menu.item.short_str()}", colour=discord.Colour.blue(),
                               description=content))
             edit_variables.append({'name':column.name, 'disp_name':column.comment, 
@@ -792,8 +775,7 @@ async def delete_item(menu):
     data_buttons = [i for i in menu.buttons]
     
     confirm_page = [discord.Embed(title="Eliminar", colour=discord.Colour.blue(),
-                                  description=f"¿Está seguro de que desea eliminar **{menu.item.short_str()}**? \
-                                  Una vez eliminado, no es posible recuperarlo.")]
+                                  description=f"¿Está seguro de que desea eliminar **{menu.item.short_str()}**? Una vez eliminado, no es posible recuperarlo.")]
     confirm_buttons = []
 
     followup_no = ComponentsButton.Followup()
