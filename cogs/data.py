@@ -1,4 +1,4 @@
-import discord
+﻿import discord
 from discord.ext import commands
 from sqlalchemy.orm import sessionmaker, joinedload
 from cogs.orm import models

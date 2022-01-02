@@ -1,5 +1,5 @@
-from discord.ext import commands
-from .data import blood_delta, wp_delta, pwp_delta, hp_delta, agg_delta
+﻿from discord.ext import commands
+from .data import blood_delta, wp_delta, pwp_delta, hp_delta, agg_delta, leth_delta
 admin_role = 'Bot Admin'
 class Shortcuts(commands.Cog, name = 'Atajos'):
     def __init__(self, bot):
@@ -58,7 +58,7 @@ class Shortcuts(commands.Cog, name = 'Atajos'):
     @commands.has_role(admin_role)
     async def giveagg(self, ctx, amount:int, character:str):
         """
-        Da determinada cantidad de niveles de da�o agravado a un personaje dado.
+        Da determinada cantidad de niveles de daño agravado a un personaje dado.
         """
         await ctx.send(agg_delta(character, amount))
         await ctx.send(hp_delta(character, -3*amount))
@@ -67,7 +67,7 @@ class Shortcuts(commands.Cog, name = 'Atajos'):
     @commands.has_role(admin_role)
     async def giveleth(self, ctx, amount:int, character:str):
         """
-        Da determinada cantidad de niveles de da�o letal a un personaje dado.
+        Da determinada cantidad de niveles de daño letal a un personaje dado.
         """
         await ctx.send(leth_delta(character, amount))
         await ctx.send(hp_delta(character, -2*amount))
@@ -125,7 +125,7 @@ class Shortcuts(commands.Cog, name = 'Atajos'):
     @commands.has_role(admin_role)
     async def takeagg(self, ctx, amount:int, character:str):
         """
-        Elimina determinada cantidad de niveles de da�o agravado de un personaje dado.
+        Elimina determinada cantidad de niveles de daño agravado de un personaje dado.
         """
         await ctx.send(agg_delta(character, -amount))
         await ctx.send(hp_delta(character, 3*amount))
@@ -134,7 +134,7 @@ class Shortcuts(commands.Cog, name = 'Atajos'):
     @commands.has_role(admin_role)
     async def takeleth(self, ctx, amount:int, character:str):
         """
-        Elimina determinada cantidad de niveles de da�o letal de un personaje dado.
+        Elimina determinada cantidad de niveles de daño letal de un personaje dado.
         """
         await ctx.send(leth_delta(character, -amount))
         await ctx.send(hp_delta(character, 2*amount))
