@@ -41,7 +41,6 @@ async def advance_date(bot):
     time_data = load_time_data()
     time_data['day'] += 1
     dump_time_data(time_data)
-    await bot.data_backup(time_data['backup_channel'])
     notifications_channel = bot.get_channel(time_data['notifications_channel'])
     await apply_time_effects(time_data['day'], notifications_channel)
     
@@ -126,6 +125,7 @@ class Time(commands.Cog, name = 'Tiempo'):
         if t >= time_data['next']:
             time_data['next'] += time_data['lapse']
             dump_time_data(time_data)
+			await self.bot.data_backup(time_data['backup_channel'])
             if time_data['running']:
                 await advance_date(self.bot)
         
