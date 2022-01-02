@@ -295,8 +295,8 @@ async def edit_trait_value(menu, trait_name):
     await menu.refresh_menu_buttons()
     embed = discord.Embed(title=f"{trait_name}", colour=discord.Colour.blue(),
                           description=f"Introduzca un nuevo valor de {trait_name}, seguido opcionalmente de especialidades o especificaciones. Por ejemplo:\n\
-						  \n`5 Saltar muros`\n\
-						  \nO escriba \"Ninguno\" para eliminar el rasgo del personaje:\n\n`Ninguno`")
+                          \n`5 Saltar muros`\n\
+                          \nO escriba \"Ninguno\" para eliminar el rasgo del personaje:\n\n`Ninguno`")
     bot_message = await menu._ctx.send(embed = embed)
 
     success = False
@@ -840,9 +840,9 @@ class Data(commands.Cog, name = 'Datos'):
         
     @commands.command(name='find', aliases=['buscar'])
     async def read_by_name(self, ctx, table:str, *, name=''):
-		"""
-		Permite buscar un elemento dentro de la base de datos del bot.
-		"""
+        """
+        Permite buscar un elemento dentro de la base de datos del bot.
+        """
         if len(name) == 0:
             await ctx.invoke(self.bot.get_command('data'), args=table)
         else:
@@ -876,9 +876,9 @@ class Data(commands.Cog, name = 'Datos'):
         
     @commands.command(name='data', aliases=['d', 'list', 'all'])
     async def read_all(self, ctx, *, args):
-		"""
-		Lista todos los elementos de un tipo dentro de la base de datos del bot.
-		"""
+        """
+        Lista todos los elementos de un tipo dentro de la base de datos del bot.
+        """
         model_class = models.get_model_class(args)
         if model_class is None:
             await ctx.send(f'{args} no se reconoce en la base de datos')
@@ -898,9 +898,9 @@ class Data(commands.Cog, name = 'Datos'):
 
     @commands.command(name='trait', aliases=['get', 'traits', 'character', 'char', 'c'])
     async def get_traits(self, ctx, character_name:str, *, trait_name=''):
-		"""
-		Devuelve el valor de un rasgo para un personaje dado.
-		"""
+        """
+        Devuelve el valor de un rasgo para un personaje dado.
+        """
         if trait_name == '':
             await ctx.invoke(self.bot.get_command('find'), table='character', name=character_name)
         else:
