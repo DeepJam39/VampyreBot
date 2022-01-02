@@ -240,6 +240,8 @@ class Vampire(Character):
 **Salud:** {self.health_str()} 
 **Reserva de sangre:** {self.blood_str()} 
 
+**Debilidad de clan:** {self.clan.curse} {'('+self.curse_spec+')' if self.curse_spec is not None else ''}
+
 {self.notes if self.notes is not None else ''}
                 """
     
@@ -297,6 +299,8 @@ class Ghoul(Character):
 
 **Salud:** {self.health_str()} 
 **Reserva de sangre:** {self.blood_str()}
+
+**Debilidad de clan:** {self.clan.curse} {'('+self.curse_spec+')' if self.curse_spec is not None else ''}
 
 {self.notes if self.notes is not None else ''}"""
     
