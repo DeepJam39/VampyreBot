@@ -15,6 +15,9 @@ class Transfer(commands.Cog, name = 'Importar y Exportar'):
     @export.command(name = 'channel')
     @commands.has_role(admin_role)
     async def export_channel(self, ctx, channel):
+		"""
+		Exporta el contenido completo de un canal como fichero de texto.
+		"""
         channel = self.bot.get_channel(int(channel[2:-1]))
         messages = await channel.history().flatten()
         messages = "\n\n".join([m.content.replace("\n** **","") for m in messages[::-1]])

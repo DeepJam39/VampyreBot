@@ -137,6 +137,9 @@ class Time(commands.Cog, name = 'Tiempo'):
         
     @commands.command()
     async def time(self, ctx):
+		"""
+		Muestra un menú con el tiempo actual dentro del rol y el momento de la próxima actualización. Permite a los administradores avanzar el tiempo manualmente.
+		"""
         time_menu = ButtonsMenu(ctx, menu_type=ButtonsMenu.TypeEmbed, show_page_director=False)
         time_embed, buttons = await get_time_embed(is_admin(time_menu.owner), self.bot)
         time_menu.add_page(time_embed)

@@ -840,6 +840,9 @@ class Data(commands.Cog, name = 'Datos'):
         
     @commands.command(name='find', aliases=['buscar'])
     async def read_by_name(self, ctx, table:str, *, name=''):
+		"""
+		Permite buscar un elemento dentro de la base de datos del bot.
+		"""
         if len(name) == 0:
             await ctx.invoke(self.bot.get_command('data'), args=table)
         else:
@@ -873,6 +876,9 @@ class Data(commands.Cog, name = 'Datos'):
         
     @commands.command(name='data', aliases=['d', 'list', 'all'])
     async def read_all(self, ctx, *, args):
+		"""
+		Lista todos los elementos de un tipo dentro de la base de datos del bot.
+		"""
         model_class = models.get_model_class(args)
         if model_class is None:
             await ctx.send(f'{args} no se reconoce en la base de datos')
@@ -892,6 +898,9 @@ class Data(commands.Cog, name = 'Datos'):
 
     @commands.command(name='trait', aliases=['get', 'traits', 'character', 'char', 'c'])
     async def get_traits(self, ctx, character_name:str, *, trait_name=''):
+		"""
+		Devuelve el valor de un rasgo para un personaje dado.
+		"""
         if trait_name == '':
             await ctx.invoke(self.bot.get_command('find'), table='character', name=character_name)
         else:

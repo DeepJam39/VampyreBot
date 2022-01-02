@@ -100,6 +100,17 @@ class Chance(commands.Cog, name = 'Suerte'):
         
     @commands.command(aliases=['rtd'])
     async def roll(self, ctx, dice:str=None, dif:int=6):
+		"""
+		¡Lanza los dados! Como con el querido RPGBot, puedes decir: 		
+		`vp!rtd 6d10`
+		y lanzará 6 dados de diez caras, pero... si en vez de eso especificas: 
+		`vp!rtd 6d10 7`
+		lanzará los mismos 6 dados de 10 caras, pero con una dificultad de 7. El bot cuenta los éxitos, fallos y fracasos. También puedes decir:
+		`vp!rtd`
+		para repetir la última tirada, o lanzar los dados correspondientes al último pronóstico que hayas hecho usando el comando vp!chance.
+		
+		La dificultad por defecto es 7.
+		"""
         if dice is None:
             if self.last_roll is not None:
                 dice = self.last_roll['dice']
@@ -145,6 +156,12 @@ class Chance(commands.Cog, name = 'Suerte'):
         
     @commands.command()
     async def chance(self, ctx, dice:str, dif:str="6", succ:str="1"):
+		"""
+		Te muestra cuáles son las probabilidades de éxito, fallo y fracaso para una tirada dada, así como la cantidad más probable de éxitos.
+		`vp!chance 6 7` (6 dados a dificultad 7)
+		Solo funciona con dados de 10 caras. También puedes especificar la cantidad de éxitos necesarios:
+		`vp!chance 6 7 3` (6 dados a dificultad 7, se necesitan 3 éxitos)		
+		"""
         i = dice.find('d')
         if i > -1:
             dice = dice[:i]
