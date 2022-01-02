@@ -4,6 +4,13 @@ from datetime import date
 import os
 admin_role = 'Bot Admin'
 
+async def data_backup(backup_channel):
+	date_str = date.today().strftime('%Y-%m-%d')
+	with open('./data/time.json', "rb") as f:
+		await backup_channel.send(file=File(f, f"time_{date_str}.json"))
+	with open('./data/vampyre.db', "rb") as f:
+		await backup_channel.send(file=File(f, f"vampyre_{date_str}.db"))
+
 class Transfer(commands.Cog, name = 'Importar y Exportar'):
     def __init__(self, bot):
         self.bot = bot
@@ -29,11 +36,3 @@ class Transfer(commands.Cog, name = 'Importar y Exportar'):
             await ctx.send(f"Contenido del canal <#{channel.id}>:", file=File(f, filename))
             
         os.remove(filename)
-        
-    async def data_backup(self, backup_channel_id):
-        channel = self.bot.get_channel(backup_channel_id)
-        date_str = date.today().strftime('%Y-%m-%d')
-        with open('./data/time.json', "rb") as f:
-            await channel.send(file=File(f, f"time_{date_str}.json"))
-        with open('./data/vampyre.db', "rb") as f:
-            await channel.send(file=File(f, f"vampyre_{date_str}.db"))

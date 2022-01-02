@@ -6,6 +6,7 @@ import pytz
 import json
 
 from .data import apply_time_effects, is_admin
+from .transfer import data_backup
 
 from reactionmenu import ButtonsMenu, ComponentsButton
 
@@ -123,11 +124,11 @@ class Time(commands.Cog, name = 'Tiempo'):
         t = datetime.now().timestamp()
         
         if t >= time_data['next']:
-            time_data['next'] += time_data['lapse']
-            dump_time_data(time_data)
-			await self.bot.data_backup(time_data['backup_channel'])
+			await data_backup(self.bot.get_channel(time_data['backup_channel']))
             if time_data['running']:
                 await advance_date(self.bot)
+            time_data['next'] += time_data['lapse']
+            dump_time_data(time_data)
         
 
 
