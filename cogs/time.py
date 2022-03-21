@@ -1,7 +1,8 @@
 ﻿import discord
 from discord.ext import commands, tasks
 
-from datetime import datetime
+from datetime import datetime, timedelta
+import pylunar
 import pytz
 import json
 
@@ -21,6 +22,23 @@ def dump_time_data(time_data):
     with open('./data/time.json', 'w') as f:
         json.dump(time_data, f)
         
+def get_absolute_date(day):
+    return datetime(2004,9,30) + timedelta(days = day)
+
+def get_lunar_phase(date):
+    mi = pylunar.MoonInfo((40, 43, 50), (-73, 56, 6))
+    mi.update(date)
+    return {
+        0:"Luna nueva 🌑",
+        1:"Cuarto creciente 🌒",
+        2:"Primer cuarto 🌓",
+        3:"Luna gibosa creciente 🌔",
+        4:"Luna llena 🌕",
+        5:"Luna gibosa menguante 🌖",
+        6:"Último cuarto 🌗",
+        7:"Cuarto menguante 🌘",
+    }[round(mi.age() / 4.218571428571429)]
+
 def dt_delta_str(dt):
     delta_str = ""
     difference = (dt - datetime.now()).total_seconds()
@@ -61,10 +79,11 @@ async def get_time_embed(owner_is_admin, bot):
     buttons = []
     
     #time_embed.add_field(name="Día", value=f"{time_data['day']}", inline=False)
-    day_of_month = time_data['day'] % 30
-    if day_of_month == 30:
-        day_of_month = 30  
+    absolute_date = get_absolute_date(time_data['day'])
+    
+    day_of_month = absolute_date.day
     time_embed.add_field(name="Día del mes (aproximado)", value=f"{day_of_month}", inline=True)    
+    time_embed.add_field(name="Fase lunar", value=get_lunar_phase(absolute_date), inline=True)    
 
     if time_data['running']:
         time_embed.add_field(name="Paso automático del tiempo", value="Activado", inline=False)
