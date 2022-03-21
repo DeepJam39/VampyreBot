@@ -134,3 +134,7 @@ data/
 # Replit
 .replit
 .breakpoints
+
+# Jupyter (local)
+*.ipynb
+ju.bat
