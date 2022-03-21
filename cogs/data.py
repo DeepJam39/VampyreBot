@@ -1,6 +1,7 @@
-﻿import discord
+import discord
 from discord.ext import commands
 from sqlalchemy.orm import sessionmaker, joinedload
+from sqlalchemy.exc import OperationalError
 from cogs.orm import models
 from reactionmenu import ButtonsMenu, ComponentsButton
 import cogs.orm.database_connection as db
@@ -452,9 +453,10 @@ async def save_edition_yes(menu, edit_variables, data_pages, data_buttons):
         if menu.model_class is models.Character:
             if menu.item.race_id is not None:
                 race_name = session.query(models.Race).filter(models.Race.id == menu.item.race_id).first().name
-                menu.model_class = {'Vampiro':models.Vampire, 'Ghoul':models.Ghoul}.get(race_name, models.Character)
-
-                row = menu.model_class(id=menu.item.id)
+                menu.model_class = {'Vampiro':models.Vampire, 'Ghoul':models.Ghoul, 'Mortal':models.Character}.get(race_name, models.Character)
+            else:
+                menu.model_class = models.Vampire    
+            row = menu.model_class(id=menu.item.id)
             for variable in edit_variables:
                 setattr(row, variable['name'], getattr(menu.item, variable['name'], None))
         session.add(row)
@@ -935,4 +937,18 @@ class Data(commands.Cog, name = 'Datos'):
                                                              description = desc,
                                                          colour=discord.Colour.blue()))
             session.close()
-    
+
+    @commands.command(name='query', aliases=['sql'])
+    @commands.is_owner()
+    async def sql_query(self, ctx, *, args):
+        session = Session()
+        try:
+          result = session.execute(args)
+          for e in result:
+              await ctx.send(str(e))
+        except OperationalError:
+          session.execute(args)
+          await ctx.send("Done")
+        finally:
+          session.commit()
+          session.close()
