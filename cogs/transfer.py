@@ -36,3 +36,14 @@ class Transfer(commands.Cog, name = 'Importar y Exportar'):
             await ctx.send(f"Contenido del canal <#{channel.id}>:", file=File(f, filename))
             
         os.remove(filename)
+
+
+    @export.command(name = 'database', aliases = ['db'])
+    @commands.has_role(admin_role)
+    async def export_database(self, ctx, channel=None):
+        if channel is not None:
+            channel = self.bot.get_channel(int(channel[2:-1]))
+        else:
+            channel = ctx.channel
+        await data_backup(channel)
+        
